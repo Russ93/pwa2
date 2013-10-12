@@ -16,7 +16,11 @@ Copyright 2013, Josh Cope
    ========================================================================== */
 
 /* Tablet Portrait size to Base 996px */
-@media (max-width: 750) {}
+@media screen and (max-width: 959px){
+	.wrapper{
+		width: 100%;
+	}
+}
 
 /* All Mobile Sizes */
 @media only screen and (max-width: 767px) {}
