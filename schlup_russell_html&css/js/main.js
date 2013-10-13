@@ -3,7 +3,7 @@ Description: DESCRIPTION INFO GOES HERE
 1Main.js
 */
 $(function(){
-function loadLang(){
+function loadLogin(){
 	$.ajax({
 		url:"xhr/list.php",
 		type:"get",
@@ -28,7 +28,7 @@ function init(){
 init();
 //app events
 $("button").on("click",function(e){
-	loadLang();
+	loadLogin();
 	return false;
 });
 });

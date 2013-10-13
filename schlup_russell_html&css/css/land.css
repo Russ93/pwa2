@@ -40,6 +40,12 @@ li img{
 	font-size: 1.2em;
 	color: #8e8e8e;
 }
+button{
+	border: 0;
+	background: none;
+	color: #8e8e8e;
+	outline: none;
+}
 .label{
 	clear: both;
 	font-family: 'Quicksand';
