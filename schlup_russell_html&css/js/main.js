@@ -2,8 +2,15 @@
 Description: DESCRIPTION INFO GOES HERE
 1Main.js
 */
-$(function(){
-function loadLogin(){
+$("document").ready(function(){
+
+
+||
+
+})();
+
+/*
+function loadLang(){
 	$.ajax({
 		url:"xhr/list.php",
 		type:"get",
@@ -28,7 +35,8 @@ function init(){
 init();
 //app events
 $("button").on("click",function(e){
-	loadLogin();
+	loadLang();
 	return false;
 });
-});
+
+*/
