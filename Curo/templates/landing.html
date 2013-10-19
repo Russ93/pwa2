@@ -1,5 +1,12 @@
-<!--<div>
-	<script type="text/tamplate" id="landing">-->
+<!-- 
+	Put the skeleton HTML for your Landing page here
+	DO NOT include <html>, <head>, or <body> tags
+	
+	(don't remove the parent div)
+-->
+
+<div>
+	<script type="text/template" id="template_landing">
 		<div id="jq">
 		</div>
 		<header class="wrapper">
@@ -15,11 +22,12 @@
 		<div class="botsect">
 		<section class="wrapper">
 			<article>
-				<h3>sign up it's easy</h3>
-				<input placeholder="Email" id="email"></input>
+				<h3>sign up it is easy</h3>
 				<div id="jqsignup">
+				<form id="regis" action="process.php" method="POST">
+					<input placeholder="Email" name="email" id="email"></input>
+				</form>
 				</div>
-				<img src=""/>
 				<h3 class="uabl">Usability Tested</h3>
 				<p>The application Curo has had its interface tested for usability on Usability Hub by a click test and as of now has a 98% correct return rate and users spent a total of 1.5 seconds on each page </p>
 				</article>
@@ -28,6 +36,5 @@
 				</aside>
 		</section>
 		</div><!-- botsect -->
-		<script src="js/main.js"></script>
-<!--	</script>
-</div>-->
+	</script>
+</div>
