@@ -87,25 +87,17 @@ $(function(){
                         var appHeader = $.render('', 'appHeader');                // use template
                         container.append(appHeader);
                         //logout button
-                        $('#new').click(function(){
-                        	$.template('new_obj', ($(html).find('#template_new').html()));
-                        	$('#space').append($.render('', 'new_obj'));
-                        	close();
-                        })
-                        $('#new').click(function(){
-                        	$.template('new_obj', ($(html).find('#template_new').html()));
-                        	$('#space').append($.render('', 'new_obj'));
-                        	$('#submit_login').on('click', function(e) {
-                        		/*----- Put funcitons to make an obj -----*/
-                        	})
-                        	close();
-                        })
                         $('#lout').on('click', function(e){
                                 e.preventDefault();
                                 $.get('xhr/logout.php', function(){
                                 		
                                         loadLanding();
                                 });
+                        })
+                        $('#new').click(function(){
+                        	$.template('new', ($(html).find('#new').html()));
+                        	$('#space').append($.render('', 'new'));
+                        	close();
                         })
                                 return false;
                 });

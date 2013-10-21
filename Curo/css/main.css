@@ -12,6 +12,11 @@ header{
 	border-top: 3px solid #62b9d1;
 	height: 500px;
 }
+.botsect button.submit{
+	height: 7%;
+	width:  35%;
+	margin:  0 9% 0 0;
+}
 header h1{
 	margin-top: 30px;
 	width: 91%;
@@ -86,8 +91,8 @@ article input{
 .cta img{
 	width: 100%;
 }
-/*--------------- Login --------------------*/
-#jqlogin{
+/*--------------- POP Up --------------------*/
+#pop{
 	position: fixed;
 	top: 75px;
 	left: 32%;
@@ -97,19 +102,19 @@ article input{
 	border: #999 2px solid;
 	border-radius: 5px;
 }
-#jqlogin header{
+#pop header{
 	height: 20%;
 	margin-bottom: 2%;
 	padding: 0 15px;
 	border-bottom: #999 2px solid;
 }
-#jqlogin header h1{
+#pop header h1{
 	float: left;
 	margin: 0;
 	font: 100 3.6em/1.25 'Quicksand', 'Avenir', helvetica, arial, sans-serif;
 	color: #f26f21;
 }
-#jqlogin header button{
+#pop header button{
 	float: right;
 	padding: 0;
 	text-indent: 100%;
@@ -117,18 +122,18 @@ article input{
 	overflow: hidden;
 	background: url(../img/close.png) no-repeat;
 	background-size: contain;
-	margin-top: 2%;
+	margin: 2% 0 0 0;
 	width: 3.75%;
 	height: 37.5%;
 }
-#jqlogin input{
+#pop input{
 	float: left;
 	height: 10%;
 	margin: 10px;
 	width: 50%;
 	font-size: 1.8em;
 }
-#jqlogin label{
+#pop label{
 	margin: 10px;
 	width: 32%;
 	font-size: 1.8em;
@@ -137,7 +142,7 @@ article input{
 	text-align: right;
 	text-transform: capitalize;
 }
-.sign{
+.submit{
 	width: 23%;
 	height: 15%;
 	padding: 0;
@@ -155,7 +160,7 @@ article input{
 	margin: 40px;
 	text-transform: capitalize;
 }
-#jqsignup button{
+#pop button{
 	width: 35%;
 	height: 35px;
 	margin: 10px 9% 0 0;
@@ -169,6 +174,7 @@ article input{
 	position: fixed;
 	width: 100%;
 	overflow: hidden;
+	height:  52px;
 }
 #projects header li{
 	list-style: none;
@@ -204,6 +210,7 @@ article input{
 	text-indent: 100%;
 	white-space: nowrap;
 	overflow: hidden;
+	cursor:  pointer;
 }
 #projects li img{
 	width: 100%;
