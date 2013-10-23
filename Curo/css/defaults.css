@@ -28,6 +28,7 @@ body{
 h1, h2, h3, h4, h5, h6{
 	padding: 0;
 	margin: 0;
+	font-family: 'Quicksand', 'Avenir', helvetica, arial, sans-serif;
 }
 p{
 	font: normal 1.2em/1.25 'Avenir', arial, helvetica, sans-serif;

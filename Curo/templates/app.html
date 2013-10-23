@@ -9,12 +9,12 @@
 
 	<script type="text/template" id="template_app">
 		<div id="projects">
-			<div class="popup"><!-- jquery space -->
+			<div id="space"><!-- jquery space -->
 			</div><!-- jquery space -->
-			<header>
+			<header class="main">
 				<ul>
 					<li id="lout">log out</li>
-					<li id="usr"><h2>user name</h2></li>
+					<li id="usr"><h2>{{=user_n}}</h2></li>
 					<li id="logo"><img src="img/logo.png"/></li>
 				</ul>
 			</header>
@@ -22,29 +22,38 @@
 				<h1>Projects</h1>
 				<button value="New Project" id="new">New Project</button>
 			</div>
-			<div id="projects">
+			<div id="projectSpace">
 			</div> <!--projects-->
 	</script>
 	<script type="text/template" id="template_new">
 		<div id="pop">
 			<header>
 				<h1>Add New Project</h1>
-				<button id="close">remove</button>
+				<button id="close">edit</button>
 			</header>
-			<form id="loginForm">
+			<div>
 				<label>Project Name:</label><input autofocus="autofocus" id="name" type="text" name="project"/>
-				<label>Description:</label><input id="password" type="password" name="pass"/>
-				<label>Due Date:</label><input id="date" type="text" name="date"/>
-				<label>Due Date:</label>
-				<select>
+				<label>Description:</label><textarea id="desc" type="text" name="desc"/>
+				<label>Type:</label>
+				<select id="urg">
+				  <option value="normal">Normal</option>
 				  <option value="urgent">Urgent!</option>
 				  <option value="overdue">Over Due</option>
-				  <option value="normal">Normal</option>
 				  <option value="delayed">Delayed</option>
 				</select>
-				<button id="addPro" class="submit">log in</button>
-			</form>
+				<button id="add" class="submit">add project</button>
+			</div>
 		</div>
+	</script>
+	
+	<script type="text/template" id="template_projects">
+		<section class="projects">
+			<button class="edit">remove</button>
+			<div class="info" id="select">
+				<h2>{{=projectName}}</h2>
+				<p>{{=projectDescription}}</p>
+			</div>
+		</section>
 	</script>
 	
 	<script type="text/template" id="template_task_link">
@@ -55,9 +64,14 @@
 	
 	
 	<script type="text/template" id="template_task_view">
-	
-		<!-- repeatable html for full task data in list -->
-	
+	<section class="projects">
+		<button class="edit">remove</button>
+		<div class="info">
+			<h2>{{=projectName}}</h2>
+			<p>{{=projectDescription}}</p>
+		</div>
+		<p class="date">{{=dueDate}}</p>
+	</section>
 	</script>
 	
 	

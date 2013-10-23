@@ -3,8 +3,8 @@ header{
 	height: 205px;
 }
 .quote{
-	width: 81.25%;
-	margin: 0 10%;
+	width: 94%;
+	margin: 0 3%;
 }
 .botsect{
 	width: 100%;
@@ -38,13 +38,16 @@ li img{
 	width: 100%;
 }
 #logo{
+	width: 12%;
 	float: left;
-	width: 14%;
 }
 #login{
 	float: right;
 	font-size: 1.2em;
 	color: #8e8e8e;
+}
+#jlog{
+	font-size: 1.8em;
 }
 button{
 	border: 0;
@@ -98,15 +101,15 @@ article input{
 	left: 32%;
 	width: 38%;
 	background: #fff;
-	height: 265px;
 	border: #999 2px solid;
 	border-radius: 5px;
 }
 #pop header{
-	height: 20%;
+	height: 15%;
 	margin-bottom: 2%;
 	padding: 0 15px;
 	border-bottom: #999 2px solid;
+	overflow: hidden;
 }
 #pop header h1{
 	float: left;
@@ -123,15 +126,18 @@ article input{
 	background: url(../img/close.png) no-repeat;
 	background-size: contain;
 	margin: 2% 0 0 0;
-	width: 3.75%;
-	height: 37.5%;
+	width: 5%;
 }
-#pop input{
+#pop input, textarea{
 	float: left;
 	height: 10%;
 	margin: 10px;
 	width: 50%;
 	font-size: 1.8em;
+}
+#pop select{
+	float: left;
+	margin: 10px;
 }
 #pop label{
 	margin: 10px;
@@ -163,18 +169,21 @@ article input{
 #pop button{
 	width: 35%;
 	height: 35px;
-	margin: 10px 9% 0 0;
+	margin: 10px 9% 10px 0;
 }
 /*--------------- Top Bar ---------------*/
 #projects .wrapper{
-	margin-top: 50px;
+	margin: 60px 3% 0 3%;
+	width: 94%;
+	overflow: hidden;
 }
-#projects header{
+#projects .main{
 	top: 0;
 	position: fixed;
 	width: 100%;
 	overflow: hidden;
 	height:  52px;
+	background-color: #fff;
 }
 #projects header li{
 	list-style: none;
@@ -189,7 +198,7 @@ article input{
 #projects #logo{
 	margin: 4px 0 0 10px;
 	float: left;
-	width: 7%;
+	width: 112px;
 }
 #projects #usr{
 	border-left: #68c3d8 2px solid;
@@ -238,4 +247,41 @@ article input{
   box-shadow: inset 0 -2px #d47827;
   float: right;
   margin-top: 40px;
+}
+#projectSpace{
+	clear: both;
+	margin-top: 30px;
+}
+.info{	
+	margin: 5px 18px;
+	padding-top:  5px;
+	width: 45%;
+}
+.info p{
+	padding:  0;
+	margin: 0 0 0 5px;
+	color:  #8e8e8e;
+}
+section.projects{
+	clear: both;
+	overflow: hidden;
+	width:  94%;
+	margin: 10px 3%;
+	background-color: #72cde5;
+	border-bottom: 6px solid #62b9d1;
+}
+.projects .edit{
+	background: url('../img/edit.png') no-repeat;
+	background-size: contain;
+	padding: 0;
+	margin: 5px;
+	width: 2%;
+	height: 20px;
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+#pop #desc{
+	height: 75px;
+	vertical-align: top;
 }

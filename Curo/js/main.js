@@ -15,14 +15,17 @@ $(function(){
                 $.get('templates/landing.html', function(html){
                         $.template('landing', ($(html).find('#template_landing').html()));// compile template
                         container.append($.render('', 'landing')); // use template
+                        var log= ($('#space').html());
                         $('#jlog').click(function(){
-                        	$.template('login', ($(html).find('#template_login').html()));
-                        	$('#space').append($.render('', 'login'));
-                        	$('#submit_login').on('click', function(e) {
-                        		e.preventDefault();
-                        		login();
-                        	})
-                        	close();
+                        	if(($('#space').html())== log){
+	                        	$.template('login', ($(html).find('#template_login').html()));
+	                        	$('#space').append($.render('', 'login'));
+	                        	$('#submit_login').on('click', function(e) {
+	                        		e.preventDefault();
+	                        		login();
+	                        	})
+	                        }
+                        	close(log);
                         })
                         var regis= ($('#regis').html());
                         $('#rEmail').click(function(){
@@ -57,84 +60,136 @@ $(function(){
                         }
                 });
         };
-
-        var getProjects = function(){
+		function getAccount(){
+			$.ajax({
+			    url: 'xhr/get_user.php',
+			    type: 'get',
+			    dataType: 'json',
+			    success: function(response){
+			            console.log(response);
+			            $.get('templates/app.html', function(html){
+			                var appCode = $(html).find('#template_projects').html();
+			                $.template('projectView', appCode);                // compile template
+			                var projectTemp = $.render(response.projects, 'projectView');                // use template
+			                $('#projectSpace').append(projectTemp);
+			            });
+			    }
+			});
+		}
+        function getProjects(){
                 $.ajax({
-                        url: 'xhr/get_projects.php',
-                        type: 'get',
-                        dataType: 'json',
-                        success: function(response){
-                                console.log(response);
-
-                                $.get('templates/app.html', function(html){
-                                        var appCode = $(html).find('#project-view').html();
-                                        $.template('projectView', appCode);                // compile template
-                                        var projectTemp = $.render(response.projects, 'projectView');                // use template
-                                        $('#projects-content').append(projectTemp);
-                                });
-                        }
+                    url: 'xhr/get_projects.php',
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(response){
+                            console.log(response);
+                            $.get('templates/app.html', function(html){
+                                var appCode = $(html).find('#template_projects').html();
+                                $.template('projectView', appCode);                // compile template
+                                var projectTemp = $.render(response.projects, 'projectView');                // use template
+                                $('#projectSpace').append(projectTemp);
+                            });
+                    }
                 });
         }
+        function projects(){        
+        	var name = $('#name').val();
+        	var desc = $('#desc').val();
+        	var urg = $('#urg').val();
+        	
+        		$.ajax({
+        			url: 'xhr/new_project.php',
+        			data:{
+        				projectName: name,
+        				status: urg,
+        				projectDescription: desc
+        				},
+        			type: 'post',
+        			dataType: 'json',
+        			success: function(response){
+        				if(response.error){
+        					console.log(response.error);
+        				} else {
+        					console.log(response.user);
+        					console.log(name,desc,urg);
+        					data = ''
+        					$('#space').html(data);
+        				}
+        			}
+        		})//.ajax
+        }//projects
 
         var loadApp = function(){
+        	getAccount();
 			console.log("load app");
                 container.empty();
                
 
                 $.get('templates/app.html', function(html){
+                $.template('app', ($(html).find('#template_landing').html()));// compile template
+                container.append($.render('', 'app')); // use template
                         var appCode = $(html).find('#template_app').html();
                         $.template('appHeader', appCode);                // compile template
                         var appHeader = $.render('', 'appHeader');                // use template
                         container.append(appHeader);
-                        //logout button
-                        $('#new').click(function(){
-                        	$.template('new_obj', ($(html).find('#template_new').html()));
-                        	$('#space').append($.render('', 'new_obj'));
-                        	close();
-                        })
-                        $('#new').click(function(){
-                        	$.template('new_obj', ($(html).find('#template_new').html()));
-                        	$('#space').append($.render('', 'new_obj'));
-                        	$('#submit_login').on('click', function(e) {
-                        		/*----- Put funcitons to make an obj -----*/
-                        	})
-                        	close();
-                        })
+                        var box= ($('#space').html());
+                        $('#new').on('click', function(e){
+                     	   if(($('#space').html())== box){
+		                    	 $.template('new_obj', ($(html).find('#template_new').html()));
+		                    	 $('#space').append($.render('', 'new_obj'));
+		                   }                    	
+                        	close(box);
+                        	
+	                        $('#add').on('click', function(e){
+	                        	e.preventDefault();
+	                        	projects();
+	                        	loadApp();
+	                        });
+	                    });
+	                    
+						$('#projectSpace section button').on('click', function(e){
+							if(($('#space').html())== box){
+							 	 $.template('new_obj', ($(html).find('#template_new').html()));
+							 	 $('#space').append($.render('', 'new_obj'));
+							}                    	
+							close(box);
+						});
+                    
                         $('#lout').on('click', function(e){
-                                e.preventDefault();
-                                $.get('xhr/logout.php', function(){
-                                		
-                                        loadLanding();
-                                });
-                        })
-                                return false;
+                            e.preventDefault();
+                            $.get('xhr/logout.php', function(){	
+                            	loadLanding();
+                            });
+                        });
+                        getProjects();
+                            
+                         return false;
                 });
         }
 
         var login = function(){
-                var user = $('#username').val();
-                var pass = $('#password').val();
+            var user = $('#username').val();
+            var pass = $('#password').val();
 
-                $.ajax({
-                        url: 'xhr/login.php',
-                        data:{
-                                username: user,
-                                password: pass
-                                },
-                        type: 'post',
-                        dataType: 'json',
-                        success: function(response){
-                                
-                                if(response.error){
-                                        console.log(response.error);
-                                } else {
-                                        console.log(response.user);
-                                        loadApp();
+            $.ajax({
+                    url: 'xhr/login.php',
+                    data:{
+                            username: user,
+                            password: pass
+                            },
+                    type: 'post',
+                    dataType: 'json',
+                    success: function(response){
+                            
+                            if(response.error){
+                                    console.log(response.error);
+                            } else {
+                                    console.log(response.user);
+                                    loadApp();
 
-                                        e.preventDefault();
-                                }
-                        }
-                });
+                            }
+                    }
+            });
         }
 
         var register = function(){        
@@ -166,9 +221,8 @@ $(function(){
 		var init = function(){
 			checkLoginState();
 		}
-		function close(){
+		function close(data){
 			$('#close').click(function(){
-				data = ''
 				$('#space').html(data);
 					
 			})
