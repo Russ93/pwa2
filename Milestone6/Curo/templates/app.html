@@ -1,0 +1,85 @@
+<!-- 
+	Put the skeleton HTML for your Application here
+	DO NOT include <html>, <head>, or <body> tags
+	
+	Create a separate template for any repeatable components
+-->
+
+<div>
+
+	<script type="text/template" id="template_app">
+		<div id="projects">
+			<div id="space"><!-- jquery space -->
+			</div><!-- jquery space -->
+			<header class="main">
+				<div id="drop">
+				</div>
+				<ul>
+					<li id="lout">log out</li>
+					<li id="usr"><h2 id="title"></h2></li>
+					<li id="logo"><img src="img/logo.png"/></li>
+				</ul>
+			</header>
+			<div class="wrapper">
+				<h1 class="label">Projects</h1>
+				<button id="new">New Project</button>
+			</div>
+			<div id="projectSpace">
+		</div> <!--projects-->
+	</script>
+	<script type="text/template" id="template_new">
+		<div id="pop">
+			<header>
+				<h1 class="popHead">Add New Project</h1>
+				<button id="close">edit</button>
+			</header>
+			<div class="pros">
+				<label class="forName">Project Name:</label><input autofocus="autofocus" id="name" value="name" type="text" name="project"/>
+				<label class="forDesc">Description:</label><textarea id="desc" type="text" value="desc" name="desc"/>
+				<label class="forType">Type:</label>
+				<select id="urg">
+				  <option value="normal">Normal</option>
+				  <option value="urgent">Urgent!</option>
+				  <option value="overdue">Over Due</option>
+				  <option value="delayed">Delayed</option>
+				</select>
+				<button id="add" class="submit">Done</button>
+			</div>
+		</div>
+	</script>
+	<script type="text/template" id="template_projects">
+		<section class="projects">
+		
+			<button class="edit" projectID="{{=id}}">remove</button>
+			<div class="info">
+				<h2>{{=projectName}}</h2>
+				<p>{{=projectDescription}}</p>
+			</div>
+		</section>
+	</script>
+	<script type="text/template" id="template_account_info">
+		<div id="editAccount">
+			<p>Edit Account</p>
+		</div>
+		<div id="off">
+		</div>
+	</script>
+	<script type="text/template" id="template_task_view">
+	<section class="projects">
+		<button class="edit" taskID="{{=id}}">remove</button>
+		<div class="info">
+			<h2>{{=taskName}}</h2>
+			<p>{{=taskDescription}}</p>
+		</div>
+		<p class="date">{{=dueDate}}</p>
+	</section>
+	</script>
+	<script type="text/template" id="template_task_link">
+		
+		<!-- repeatable html for task menu -->
+	
+	</script>
+	
+	<!-- more component templates here -->
+	
+</div>

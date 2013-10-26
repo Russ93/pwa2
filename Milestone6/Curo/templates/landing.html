@@ -1,0 +1,59 @@
+<!-- 
+	Put the skeleton HTML for your Landing page here
+	DO NOT include <html>, <head>, or <body> tags
+	
+	(don't remove the parent div)
+-->
+
+<div>
+	<script type="text/template" id="template_landing">
+		<div id="space">
+		</div>
+		<header class="wrapper">
+			<ul>
+				<li id="logo"><img src="img/logo.png"/></li>
+				<li id="login button"><button id="jlog">Log in</span></button>
+			</ul>
+			<div class="quote">
+				<h1><span class="label">Curo</span> - use minimal time by taking control</h1>
+				<h3>Curo is a task management system that will help you with assign and manage team projects</h3>
+			</div>
+		</header>
+		<div class="botsect">
+		<section class="wrapper">
+			<article>
+				<h3>sign up it is easy</h3>
+				<div id="jqsignup">
+				<form id="regis">
+					<input placeholder="Email" name="email" id="rEmail"></input>
+				</form>
+				</div>
+				<h3 class="uabl">Usability Tested</h3>
+				<p>The application Curo has had its interface tested for usability on Usability Hub by a click test and as of now has a 98% correct return rate and users spent a total of 1.5 seconds on each page </p>
+				</article>
+				<aside class="cta">
+					<img src="img/comp.jpg"/>
+				</aside>
+		</section>
+		</div><!-- botsect -->
+	</script>
+	<script type="text/template" id="template_regis">
+		<input id= "rUser" placeholder="Username" type="text" name="usr"></input>
+		<input id="rPass" placeholder="Password" type="password" name="pass" /></input>
+		<button id="rSubmit" class="submit">Submit</button>
+	</script>
+	<script type="text/template" id="template_login">
+		<div id="pop">
+			<header>
+				<h1>login</h1>
+				<button id="close">remove</button>
+			</header>
+			<form id="loginForm">
+				<span id="ack"></span>
+				<label>username:</label><input autofocus="autofocus" id="username" type="text" name="usr"/>
+				<label>password:</label><input id="password" type="password" name="pass"/>
+				<button id="submit_login" class="submit">log in</button>
+			</form>
+		</div>
+	</script>
+</div>
