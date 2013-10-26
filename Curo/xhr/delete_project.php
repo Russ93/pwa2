@@ -18,7 +18,7 @@ $updata = array();
 $user = $_SESSION["user"];
 $projectID = param($_POST, 'projectID', '');
 
-if( empty($projectID) ){ errormsg("The 'projectID' is required. This is what was input $projectID"); }
+if( empty($projectID) ){ errormsg("The 'projectID' is required."); }
 
 $dbh = new PDB();
 $db = $dbh->db;

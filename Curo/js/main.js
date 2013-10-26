@@ -108,7 +108,6 @@ function getProjects(){
         	    	 $('#desc').val($($(this).next().children('p')).html());
         	    	 $('.pros').prepend('<span id="delete">Delete Project</span>')
         	    	 $('#delete').on('click', function(e){
-        	    	 	console.log('I was clicked')
         	    	 	e.preventDefault;
         	    	 	deleteThings("pro",selectedID);
         	    	 	loadApp;
@@ -128,25 +127,29 @@ function getProjects(){
     });//.ajax
 }
 function deleteThings(type,id){
-	console.log(id)
 	if(type==="pro"){
 		$.ajax({
 		    url: 'xhr/delete_project.php',
-		    data:{projectID: id},
-		    type: 'get',
+		    data:{projectID: id,
+		    	},
+		    type: 'post',
 		    dataType: 'json',
 		    success: function(response){
 				console.log(response);
+				console.log(id);
+				loadApp();
 		    }
 		});
 	}else if(type==="task"){
 		$.ajax({
 		    url: 'xhr/delete_task.php',
 			data:{taskID: id},
-		    type: 'get',
+		    type: 'post',
 		    dataType: 'json',
 		    success: function(response){
 				console.log(response);
+				getTasks(id);
+				$('#space').html('');
 		    }
 		});
 	}else{
