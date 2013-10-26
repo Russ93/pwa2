@@ -8,9 +8,9 @@ console.log('run');
 
 var container = $('#container');
 function loadLanding() {
-console.log('laodlanding');
-
-container.empty();
+	console.log('laodlanding');
+	
+	container.empty();
 
 	$.get('templates/landing.html', function(html){
         $.template('landing', ($(html).find('#template_landing').html()));// compile template
@@ -83,7 +83,6 @@ function getProjects(){
         type: 'get',
         dataType: 'json',
         success: function(response){
-        	var proInfo = response;
             $.get('templates/app.html', function(html){
                 var appCode = $(html).find('#template_projects').html();
                 $.template('projectView', appCode);                // compile template
@@ -92,9 +91,10 @@ function getProjects(){
                 var box= ($('#space').html());
                 
                 $('.info').on('click', function(e){
+                	var nameHt = $(this).children('h2');
+                	var nameTx = $(nameHt).html();
                 	e.preventDefault();
-                	$(this).prev().attr('projectID');
-                	getTasks($(this).prev().attr('projectID'))
+                	getTasks(($(this).prev().attr('projectID')),nameTx)
                 });
                 
                 $('.edit').on('click', function(e){
@@ -104,8 +104,15 @@ function getProjects(){
         	    	 $.template('new_obj', ($(html).find('#template_new').html()));
         	    	 $('#space').append($.render('', 'new_obj'));
         	    	 $('.popHead').html('Edit Project');
+        	    	 $('#name').val($($(this).next().children('h2')).html());
+        	    	 $('#desc').val($($(this).next().children('p')).html());
         	    	 $('.pros').prepend('<span id="delete">Delete Project</span>')
-        	    	 
+        	    	 $('#delete').on('click', function(e){
+        	    	 	console.log('I was clicked')
+        	    	 	e.preventDefault;
+        	    	 	deleteThings("pro",selectedID);
+        	    	 	loadApp;
+        	    	 })
         	   		}//if
         	   		
             		close(box);
@@ -120,10 +127,38 @@ function getProjects(){
         }//success
     });//.ajax
 }
-function getTasks(id){
-	$('.label').html('Tasks');
+function deleteThings(type,id){
+	console.log(id)
+	if(type==="pro"){
+		$.ajax({
+		    url: 'xhr/delete_project.php',
+		    data:{projectID: id},
+		    type: 'get',
+		    dataType: 'json',
+		    success: function(response){
+				console.log(response);
+		    }
+		});
+	}else if(type==="task"){
+		$.ajax({
+		    url: 'xhr/delete_task.php',
+			data:{taskID: id},
+		    type: 'get',
+		    dataType: 'json',
+		    success: function(response){
+				console.log(response);
+		    }
+		});
+	}else{
+		console.log("you forgot something");
+	}
+
+}
+function getTasks(id, proName){
+	console.log(proName);
+	$('.label').html(proName);
 	$('#new').html('New Task');
-	
+	$('#new').unbind();
     $.ajax({
         url: 'xhr/get_tasks.php',
         type: 'get',
@@ -137,50 +172,58 @@ function getTasks(id){
                 var projectTemp = $.render(response.tasks, 'taskView');                // use template
                 $('#projectSpace').append(projectTemp);
                 var box= ($('#space').html());
-                $('#new').on('click', function(e){                   	
-                	$('.pros').empty()
-                	$.get('templates/app.html', function(html){
-                	    if(($('#space').html())== box){
-                	    	$.template('tEdit', ($(html).find('#template_task_new').html()));
-                	    	$('#space').append($.render('', 'tEdit'));
-                	    } 
-                	    $('#add').on('click', function(e){
-                	    	e.preventDefault();
-                	    	tasks(id)
-                	    });//#add
-                	});
+                $('#new').on('click', function(e){
+                	if(($('#space').html())== box){
+                		console.log('I;m good till this line');
+                		$.template('new_obj', ($(html).find('#template_new').html()));
+                		$('#space').append($.render('', 'new_obj'));
+                		$('.popHead').html('Create a New Task');
+                		$('.pros').prepend('<span id="delete">Delete Project</span>');
+                		$('.forName').html('Task Name:');
+                		$('#desc').after('<label>Due Date:</label><input id="due" type="text" value="due" name="due"/>');
+                	}                    	
                 	close(box);
-                })
+                	
+                	$('#add').on('click', function(e){
+                		e.preventDefault();
+                		newTask(id);
+                	});
+                });
                 $('.edit').on('click', function(e){
-                	console.log(box);
                 	e.preventDefault();
-                	var taskID = $(this).attr('taskID');
-                	console.log(taskID)
-        		    if(($('#space').html())== box){
-	        	    	 $.get('templates/app.html', function(html){
-	        	    	     $.template('tEdit', ($(html).find('#template_task_new').html()));// compile template
-	        	    	     $('#space').html($.render('', 'tEdit'));
-	        	    	     $('.popHead').html('Edit Task');
-	        	    	     $('#add').on('click', function(e){
-	        	    	     	e.preventDefault();
-	        	    	     	updateTasks(taskID)
-	        	    	     });//#add
-	        	    	 });
-        	   		}//if
-        	   		$('#close').on('click', function(e){
-        	   			$('#space').empty();
-        	   		})
-		   			
-		   			$('#add').on('click', function(e){
-		   				e.preventDefault();
-		   				console.log('ive been clicked')
-		   			});//#add
+                	var selectedID = $(this).attr('taskID');
+                	var selectedName = $(this).attr('#name');
+                    if(($('#space').html())== box){
+                	 $.template('new_obj', ($(html).find('#template_new').html()));
+                	 $('#space').append($.render('', 'new_obj'));
+                	 $('.popHead').html('Edit Task');
+                	 $('.pros').prepend('<span id="delete">Delete Project</span>')
+                	 $('.forName').html('Task Name:');
+                	 $('#desc').after('<label>Due Date:</label><input id="due" type="text" value="due" name="due"/>');
+                	 $('#name').val($($(this).next().children('h2')).html());
+                	 $('#desc').val($($(this).next().children('p')).html());
+                	 $('#due').val($($(this).siblings('p')).html());
+                	 $('#delete').on('click', function(e){
+                	 	console.log('I was clicked')
+                	 	e.preventDefault;
+                	 	deleteThings("task",selectedID);
+                	 	getTasks(id);
+                	 })
+                	}//if
+                		
+                	close(box);
+                	
+                    $('#add').on('click', function(e){
+                    	e.preventDefault();
+                    	updateTasks(selectedID);
+                    	getTasks(id);
+                    });//#add
                 });//.edit
             });//.get
         }//success
     });//.ajax
 }
-function tasks(id,taskID){
+function newTask(id,taskID){
 	var name = $('#name').val();
 	var due = $('#due').val();
 	var desc = $('#desc').val();
@@ -190,7 +233,6 @@ function tasks(id,taskID){
 		url: 'xhr/new_task.php',
 		data:{
 			projectID: id,
-			taskID: taskID,
 			taskName: name,
 			status: urg,
 			taskDescription: desc,
@@ -206,11 +248,11 @@ function tasks(id,taskID){
 				console.log(name,desc,urg);
 				data = ''
 				$('#space').html(data);
-			}
-		}
-	})
-
-}
+				getTasks(id);
+			}//else
+		}//sucess
+	})//.ajax
+}//tasks
 function updateTasks(id){
 	var name = $('#name').val();
 	var due = $('#due').val();
@@ -337,9 +379,13 @@ function loadApp(){
 			$('#editAccount').on('click', function(e){
 				$('#drop').empty();
 				if(($('#space').html())== box){
-					$.template('edit_acc', ($(html).find('#template_edit_acc').html()));
+					$.template('edit_acc', ($(html).find('#template_new').html()));
 					$('#space').append($.render('', 'edit_acc'));
-					
+					$('.popHead').html('Edit Your Account');
+					$('.forName').html('New Accout Name');
+					$('#name').val($('#usr').text());
+					$('#desc,#urg,.forDesc,.forType').remove();
+					$('<label>Password:</label><input id="pass" placeholder="Password" type="password" name="pass" /></input>').insertAfter( "#name" );
 				}
 				close(box);
 				$('#add').on('click', function(e){
@@ -357,7 +403,7 @@ function loadApp(){
         getAccount();
 }
 function updateAccount() {
-	var email = $('#email').val();
+	var email = $('#name').val();
 	var pass = $('#pass').val();
 	
 	$.ajax({
@@ -400,7 +446,6 @@ function login(){
                             $('#ack').html('* '+response.error)
                     } else {
                             loadApp();
-
                     }
             }
     });
@@ -437,7 +482,6 @@ function init(){
 }
 function close(data){
 	$('#close').click(function(){
-		$('#space').empty();
 		$('#space').html(data);	
 	})
 }
