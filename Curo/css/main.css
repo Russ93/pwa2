@@ -253,6 +253,7 @@ article input{
 	margin-top: 30px;
 }
 .info{	
+	float:  left;
 	margin: 5px 18px;
 	padding-top:  5px;
 	width: 45%;
@@ -260,7 +261,7 @@ article input{
 .info p{
 	padding:  0;
 	margin: 0 0 0 5px;
-	color:  #8e8e8e;
+	color:  #666;
 }
 section.projects{
 	clear: both;
@@ -284,4 +285,40 @@ section.projects{
 #pop #desc{
 	height: 75px;
 	vertical-align: top;
+}
+#ack{
+	float: left;
+	color: #f00;
+	font-size: 1.2em;
+	text-indent: 18%;
+	width:  100%;
+}
+#off{
+	position: fixed;
+	width: 100%;
+	height:  100%;
+	background-color: rgba(0, 0, 0, .0);
+}
+#editAccount{
+	text-align: right;
+	border: 2px solid #62b9d1;
+	border-top:  none;
+	position: fixed;
+	width: 150px;
+	top: 52px;
+	right: 40px;
+	font-size: 1.6em;
+	background-color: #fff;
+	z-index: 9;
+}
+#editAccount p{
+	margin-right:  15px;
+	z-index: 8;
+}
+#delete{
+	color: #f00;
+	width:  25%;
+	display: block;
+	margin-left: 10%;
+	cursor:  pointer;
 }
