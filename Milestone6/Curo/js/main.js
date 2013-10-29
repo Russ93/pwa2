@@ -2,16 +2,10 @@
 	Your Project Title
 	Author: You
 */
-$.ajaxSetup({cache: false});
 $(function(){
-console.log('run');
-
 var container = $('#container');
-function loadLanding() {
-	console.log('laodlanding');
-	
+function loadLanding() {	
 	container.empty();
-
 	$.get('templates/landing.html', function(html){
         $.template('landing', ($(html).find('#template_landing').html()));// compile template
         container.append($.render('', 'landing')); // use template
@@ -42,7 +36,70 @@ function loadLanding() {
         })//#rEmail
 	});//.get
 };//loadLanding()
-
+function loadApp(){
+        container.empty();
+    $.get('templates/app.html', function(html){
+        $.template('app', ($(html).find('#template_landing').html()));// compile template
+        container.append($.render('', 'app')); // use template
+        $.template('appHeader', ($(html).find('#template_app').html()));                // compile template
+        container.append($.render('', 'appHeader'));           // use template
+        var box= ($('#space').html());
+            $('#new').on('click', function(e){
+				if(($('#space').html())== box){
+					$.template('new_obj', ($(html).find('#template_new').html()));
+					$('#space').append($.render('', 'new_obj'));
+				}                    	
+				close(box);
+				
+				$('#add').on('click', function(e){
+					e.preventDefault();
+					projects();
+					loadApp();
+				});
+			});
+				
+			$('#lout').on('click', function(e){
+			e.preventDefault();
+			$.get('xhr/logout.php', function(){	
+				loadLanding();
+			});
+		});
+		$('#logo').css('cursor', 'pointer')
+		$('#logo').on('click', function(e){
+			loadApp();
+		});
+		$('#usr').css('cursor', 'pointer')
+		$('#usr').on('click', function(e){
+			$.template('drop_name', ($(html).find('#template_account_info').html()));
+			$('#drop').html($.render('', 'drop_name'));
+			$('#editAccount').css('cursor', 'pointer')
+			$('#editAccount').on('click', function(e){
+				$('#drop').empty();
+				if(($('#space').html())== box){
+					$.template('edit_acc', ($(html).find('#template_new').html()));
+					$('#space').append($.render('', 'edit_acc'));
+					$('.popHead').html('Edit Your Account');
+					$('.forName').html('New Email Address');
+					$('#name').val($('#usr').attr('usrEmail'));
+					$('#desc,#urg,.forDesc,.forType').remove();
+					$.template('acc_input', ($(html).find('#template_edit_account').html()));
+					$($.render('', 'acc_input')).insertAfter( "#name" );
+				}
+				close(box);
+				$('#add').on('click', function(e){
+					e.preventDefault();
+					updateAccount();
+				});
+			})
+			$('#off').on('click', function(e){
+				$('#drop').empty();
+			})
+		});
+        getProjects();
+        return false;
+        });//.get
+        getAccount();
+}
 function checkLoginState(){
 	$.ajax({
         url: 'xhr/check_login.php',
@@ -135,8 +192,6 @@ function deleteThings(type,id){
 		    type: 'post',
 		    dataType: 'json',
 		    success: function(response){
-				console.log(response);
-				console.log(id);
 				loadApp();
 		    }
 		});
@@ -147,8 +202,6 @@ function deleteThings(type,id){
 		    type: 'post',
 		    dataType: 'json',
 		    success: function(response){
-				console.log(response);
-				getTasks(id);
 				$('#space').html('');
 		    }
 		});
@@ -158,7 +211,6 @@ function deleteThings(type,id){
 
 }
 function getTasks(id, proName){
-	console.log(proName);
 	$('.label').html(proName);
 	$('#new').html('New Task');
 	$('#new').unbind();
@@ -177,11 +229,9 @@ function getTasks(id, proName){
                 var box= ($('#space').html());
                 $('#new').on('click', function(e){
                 	if(($('#space').html())== box){
-                		console.log('I;m good till this line');
                 		$.template('new_obj', ($(html).find('#template_new').html()));
                 		$('#space').append($.render('', 'new_obj'));
                 		$('.popHead').html('Create a New Task');
-                		$('.pros').prepend('<span id="delete">Delete Project</span>');
                 		$('.forName').html('Task Name:');
                 		$('#desc').after('<label>Due Date:</label><input id="due" type="text" value="due" name="due"/>');
                 	}                    	
@@ -200,14 +250,13 @@ function getTasks(id, proName){
                 	 $.template('new_obj', ($(html).find('#template_new').html()));
                 	 $('#space').append($.render('', 'new_obj'));
                 	 $('.popHead').html('Edit Task');
-                	 $('.pros').prepend('<span id="delete">Delete Project</span>')
+                	 $('.pros').prepend('<span id="delete">Delete Task</span>')
                 	 $('.forName').html('Task Name:');
                 	 $('#desc').after('<label>Due Date:</label><input id="due" type="text" value="due" name="due"/>');
                 	 $('#name').val($($(this).next().children('h2')).html());
                 	 $('#desc').val($($(this).next().children('p')).html());
                 	 $('#due').val($($(this).siblings('p')).html());
                 	 $('#delete').on('click', function(e){
-                	 	console.log('I was clicked')
                 	 	e.preventDefault;
                 	 	deleteThings("task",selectedID);
                 	 	getTasks(id);
@@ -247,8 +296,6 @@ function newTask(id,taskID){
 			if(response.error){
 				console.log(response.error);
 			} else {
-				console.log(response.user);
-				console.log(name,desc,urg);
 				data = ''
 				$('#space').html(data);
 				getTasks(id);
@@ -282,8 +329,6 @@ function updateTasks(id){
 			}
 		}
 	})
-	console.log(id,name,due,desc,urg)
-
 }
 function projects(){        
 	var name = $('#name').val();
@@ -303,8 +348,6 @@ function projects(){
 			if(response.error){
 				console.log(response.error);
 			} else {
-				console.log(response.user);
-				console.log(name,desc,urg);
 				data = ''
 				$('#space').html(data);
 			}
@@ -330,90 +373,27 @@ function proEdit(numbah){
 			if(response.error){
 				console.log(response.error);
 			} else {
-				console.log(response.user);
-				console.log(name,desc,urg);
 				data = ''
 				$('#space').html(data);
 			}
 		}
 	})//.ajax
 }
-
-function loadApp(){
-//			console.log(res);
-        container.empty();
-    $.get('templates/app.html', function(html){
-        $.template('app', ($(html).find('#template_landing').html()));// compile template
-        container.append($.render('', 'app')); // use template
-        var appCode = $(html).find('#template_app').html();
-        $.template('appHeader', appCode);                // compile template
-        var appHeader = $.render('', 'appHeader');                // use template
-        container.append(appHeader);
-        var box= ($('#space').html());
-            $('#new').on('click', function(e){
-				if(($('#space').html())== box){
-					$.template('new_obj', ($(html).find('#template_new').html()));
-					$('#space').append($.render('', 'new_obj'));
-				}                    	
-				close(box);
-				
-				$('#add').on('click', function(e){
-					e.preventDefault();
-					projects();
-					loadApp();
-				});
-			});
-				
-			$('#lout').on('click', function(e){
-			e.preventDefault();
-			$.get('xhr/logout.php', function(){	
-				loadLanding();
-			});
-		});
-		$('#logo').css('cursor', 'pointer')
-		$('#logo').on('click', function(e){
-			loadApp();
-		});
-		$('#usr').css('cursor', 'pointer')
-		$('#usr').on('click', function(e){
-			console.log('the click ran');
-			$.template('drop_name', ($(html).find('#template_account_info').html()));
-			$('#drop').html($.render('', 'drop_name'));
-			$('#editAccount').on('click', function(e){
-				$('#drop').empty();
-				if(($('#space').html())== box){
-					$.template('edit_acc', ($(html).find('#template_new').html()));
-					$('#space').append($.render('', 'edit_acc'));
-					$('.popHead').html('Edit Your Account');
-					$('.forName').html('New Accout Name');
-					$('#name').val($('#usr').text());
-					$('#desc,#urg,.forDesc,.forType').remove();
-					$('<label>Password:</label><input id="pass" placeholder="Password" type="password" name="pass" /></input>').insertAfter( "#name" );
-				}
-				close(box);
-				$('#add').on('click', function(e){
-					e.preventDefault();
-					updateAccount();
-				});
-			})
-			$('#off').on('click', function(e){
-				$('#drop').empty();
-			})
-		});
-        getProjects();
-        return false;
-        });//.get
-        getAccount();
-}
 function updateAccount() {
 	var email = $('#name').val();
 	var pass = $('#pass').val();
+	var f_name = $('#f_nam').val();
+	var l_name = $('#l_nam').val();
+	var phone = $('#phone').val();
 	
 	$.ajax({
 		url: 'xhr/update_user.php',
 		data:{
+			email: email,
 			user_p: pass,
-			email: email
+			first_name: f_name,
+			last_name: l_name,
+			phone: phone
 		},
 		type: 'post',
 		dataType: 'json',
@@ -423,7 +403,6 @@ function updateAccount() {
 			    console.log(response.error);
 			    $('#ack').html('* '+response.error)
 			} else {
-			    console.log(response);
 			    loadApp();
 			}
 		}
@@ -472,7 +451,6 @@ function register(){
 			if(response.error){
 				console.log(response.error);
 			} else {
-					console.log(response.user);
 					loadApp();
     
 					e.preventDefault();

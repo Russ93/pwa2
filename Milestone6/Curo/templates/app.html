@@ -16,7 +16,7 @@
 				</div>
 				<ul>
 					<li id="lout">log out</li>
-					<li id="usr"><h2 id="title"></h2></li>
+					<li id="usr" usrEmail="{{=email}}"><h2 id="title"></h2></li>
 					<li id="logo"><img src="img/logo.png"/></li>
 				</ul>
 			</header>
@@ -74,10 +74,11 @@
 		<p class="date">{{=dueDate}}</p>
 	</section>
 	</script>
-	<script type="text/template" id="template_task_link">
-		
-		<!-- repeatable html for task menu -->
-	
+	<script type="text/template" id="template_edit_account">
+		<label class="forName">First Name:</label><input id="f_nam" placeholder="First Name" type="text" name="f_name"/>
+		<label class="forName">Last Name:</label><input id="l_nam" placeholder="Last Name" type="text" name="l_name"/>
+		<label class="forName">Phone Number:</label><input id="phone" placeholder="(555)555-5555" type="text" name="phone"/>
+		<label>Password:</label><input id="pass" placeholder="Password" type="password" name="pass" /></input>
 	</script>
 	
 	<!-- more component templates here -->
